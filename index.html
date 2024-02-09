@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Scramble</title>
+	<style type="text/css">
+		*{margin: 0;
+			padding: 0}
+
+		header{
+			background-color: pink;
+			line-height: 10vh;
+		}
+		h1{
+			text-align: center;
+		}
+		div{
+			height: 86vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: orangered;
+		}
+		.gamearea{
+				background-color: yellow;
+				width: 50%;
+				height: 60%;
+				display: flex;
+				flex-direction: column;
+				box-shadow: 0px 5px 5px black; 
+		}	
+		input{
+			border-radius: 20px;
+			font-size: 20px;
+			padding: 10px;
+			border : 2px solid black ;
+		}
+		button{
+			padding: 5px;
+			margin: 10px;
+/*			font-size: 10px;*/
+			cursor: pointer;
+			font-size: 15px;
+			border-radius: 10px;
+		}
+		button:hover{
+			font-size: 20px;
+			transition-duration: 0.5s;
+			letter-spacing: 1px;
+		}
+		.hidden{
+			display: none;
+		}
+		footer{
+/*			height: 5vh;*/
+			text-align: right;
+		}
+	</style>
+</head> 
+<body>
+	<header>
+		<h1>GUESS THE WORD GAME </h1>
+	</header>
+	
+	<div>
+		<div class="gamearea">
+			<h3 class="msg"></h3>
+			<input type="text" class="hidden">
+			<button class="btn">Click here to Start</button>
+		</div>
+	</div>
+	<footer><marquee direction=right>Thank ou for visiting...</marquee></footer>
+	<script type="text/javascript">
+		var msg = document.querySelector(".msg");
+		var guess = document.querySelector("input");
+		var btn = document.querySelector(".btn");
+		var words = ["python","javascript","c++","html","reactjs","nodejs"];		
+		var play = false;
+		var count = 0;
+		var sword;
+
+		function createsword(word){
+			var i = 0;
+			var j = word.length-1;
+			while(i<=j){
+				temp = word[i];
+				word[i] = word[j];
+				word[j] = temp;
+				i++;
+				j--; 
+			}
+			return word;
+		}
+
+		btn.addEventListener('click',function(){
+			if(!play){
+				play = true;
+				btn.innerHTML= "guess";
+				guess.classList.toggle('hidden');
+				sword = createsword(words[count].split("")).join("");
+				msg.innerHTML = sword;
+			}
+			else{
+				var userval = guess.value;
+				// msg.innerHTML = words[count];
+				if(userval === words[count]){
+					play = false;
+					msg.innerHTML = "Hey buddy you are correct!";
+					guess.classList.toggle('hidden');
+					guess.value = "";
+					count++;
+					if(count>=words.length){
+					count = 0;
+						}
+				}
+				else{
+					msg.innerHTML = `Hey buddy you are wrong.Try again for ${sword}`;
+				}
+			}
+			
+		})
+	</script>
+</body>
+</html>
